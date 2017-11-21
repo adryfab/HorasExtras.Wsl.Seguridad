@@ -10,15 +10,22 @@ Imports System.Web.Services.Protocols
 Public Class Seguridad
     Inherits System.Web.Services.WebService
 
-    '<WebMethod()> _
-    'Public Function HelloWorld() As String
-    '    Return "Hola a todos"
-    'End Function
+    Private adAuth As LdapAuthentication = New LdapAuthentication("LDAP://")
 
     <WebMethod()> _
-    Public Function ValidarCredenciales(ByVal usuario As String, ByVal clave As String, ByVal dominio As String) As Boolean
-        Dim adAuth As LdapAuthentication = New LdapAuthentication("LDAP://")
+    Public Function ValidarCredenciales(ByRef usuario As String, ByVal clave As String, ByVal dominio As String, _
+                                        ByRef CodEmp As String, ByRef NomEmp As String) As Boolean
         Dim resultado As Boolean = adAuth.ValidarCredenciales(usuario, clave, dominio)
+        usuario = adAuth.Usuario
+        CodEmp = adAuth.CodEmp
+        NomEmp = adAuth.NomEmp
         Return resultado
     End Function
+
+    <WebMethod()> _
+    Public Function MenuProcesar(ByVal UArea As String, ByVal UDep As String, ByVal UCargo As String) As Boolean
+        Dim resultado As Boolean = adAuth.MenuProcesar(UArea, UDep, UCargo)
+        Return resultado
+    End Function
+
 End Class

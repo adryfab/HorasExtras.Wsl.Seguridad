@@ -7,9 +7,35 @@ Public Class LdapAuthentication
     Dim _path As String
     Dim _filterAttribute As String
 
-    Public _Usuario As String
-    Public _CodEmp As String
-    Public _NomEmp As String
+    Private _Usuario As String
+    Public Property Usuario() As String
+        Get
+            Return _Usuario
+        End Get
+        Set(value As String)
+            _Usuario = value
+        End Set
+    End Property
+
+    Private _CodEmp As String
+    Public Property CodEmp() As String
+        Get
+            Return _CodEmp
+        End Get
+        Set(value As String)
+            _CodEmp = value
+        End Set
+    End Property
+
+    Private _NomEmp As String
+    Public Property NomEmp() As String
+        Get
+            Return _NomEmp
+        End Get
+        Set(value As String)
+            _NomEmp = value
+        End Set
+    End Property
 
     Public Sub New(ByVal path As String)
         _path = path
@@ -37,9 +63,9 @@ Public Class LdapAuthentication
             'Update the new path to the user in the directory.
             _path = result.Path
             _filterAttribute = CType(result.Properties("cn")(0), String)
-            _Usuario = CType(result.Properties("sAMAccountName")(0), String)
-            _CodEmp = CType(result.Properties("postalCode")(0), String)
-            _NomEmp = CType(result.Properties("cn")(0), String)
+            Usuario = CType(result.Properties("sAMAccountName")(0), String)
+            CodEmp = CType(result.Properties("postalCode")(0), String)
+            NomEmp = CType(result.Properties("cn")(0), String)
         Catch ex As Exception
             Throw New Exception("Error de autenticación de usuario. " & ex.Message)
         End Try
@@ -104,9 +130,9 @@ Public Class LdapAuthentication
                 'Update the new path to the user in the directory.
                 _path = result2.Path
                 _filterAttribute = CType(result2.Properties("cn")(0), String)
-                _Usuario = CType(result2.Properties("sAMAccountName")(0), String)
-                _CodEmp = CType(result2.Properties("postalCode")(0), String)
-                _NomEmp = CType(result2.Properties("cn")(0), String)
+                usuario = CType(result2.Properties("sAMAccountName")(0), String)
+                CodEmp = CType(result2.Properties("postalCode")(0), String)
+                NomEmp = CType(result2.Properties("cn")(0), String)
 
                 Return result2
             End If
