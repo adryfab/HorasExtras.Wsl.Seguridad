@@ -168,4 +168,5 @@ Public Class LdapAuthentication
         End If
         Return retorno
     End Function
+
 End Class
