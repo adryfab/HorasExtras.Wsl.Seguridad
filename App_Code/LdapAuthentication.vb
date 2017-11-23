@@ -131,11 +131,15 @@ Public Class LdapAuthentication
                 _path = result2.Path
                 _filterAttribute = CType(result2.Properties("cn")(0), String)
                 usuario = CType(result2.Properties("sAMAccountName")(0), String)
-                CodEmp = CType(result2.Properties("postalCode")(0), String)
                 NomEmp = CType(result2.Properties("cn")(0), String)
+                If result2.Properties("postalCode").Count > 0 Then
+                    CodEmp = CType(result2.Properties("postalCode")(0), String)
+                Else
+                    Throw New System.ArgumentException("No existe el codigo del usuario", "postalCode")
+                End If
 
                 Return result2
-            End If
+                End If
         Catch ex As Exception
             Throw ex
         End Try

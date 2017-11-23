@@ -25,6 +25,12 @@ Public Class Seguridad
     End Function
 
     <WebMethod()> _
+    Public Function ValidarCredencialesNEW(ByVal usuario As String, ByVal clave As String, ByVal dominio As String) As Boolean
+        Dim resultado As Boolean = adAuth.ValidarCredenciales(usuario, clave, dominio)
+        Return resultado
+    End Function
+
+    <WebMethod()> _
     Public Function MenuProcesar(ByVal UArea As String, ByVal UDep As String, ByVal UCargo As String) As Boolean
         Dim resultado As Boolean = adAuth.MenuProcesar(UArea, UDep, UCargo)
         Return resultado
