@@ -291,4 +291,29 @@ Public Class SQLConexionBD
         Return resultado
     End Function
 
+    Public Function MenuAprobar(ByVal user As String) As Boolean
+        Dim validado As Boolean = False
+        Try
+            Dim SQLDataAdapter = New SqlDataAdapter("spUsuarioAprobador", Conexion)
+            SQLDataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure
+            SQLDataAdapter.SelectCommand.Parameters.Add(New SqlParameter("@UsuarioId", SqlDbType.VarChar, 50))
+            SQLDataAdapter.SelectCommand.Parameters("@UsuarioId").Value = user
+            SQLDataAdapter.SelectCommand.Parameters.Add(New SqlParameter("@Aprobador", SqlDbType.Bit))
+            SQLDataAdapter.SelectCommand.Parameters("@Aprobador").Direction = ParameterDirection.Output
+            If Conexion.State = ConnectionState.Closed Then
+                Conexion.Open()
+            End If
+            SQLDataAdapter.SelectCommand.ExecuteNonQuery()
+            validado = SQLDataAdapter.SelectCommand.Parameters("@Aprobador").Value
+
+        Catch ex As Exception
+            validado = False
+        Finally
+            If Conexion.State = ConnectionState.Open Then
+                Conexion.Close()
+            End If
+        End Try
+        Return validado
+    End Function
+
 End Class

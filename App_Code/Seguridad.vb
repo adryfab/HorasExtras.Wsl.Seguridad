@@ -108,4 +108,10 @@ Public Class Seguridad
         Return dts
     End Function
 
+    <WebMethod()> _
+    Public Function MenuAprobar(ByVal user As String) As Boolean
+        Dim resultado As Boolean = conn.MenuAprobar(user)
+        Return resultado
+    End Function
+
 End Class
