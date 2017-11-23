@@ -25,7 +25,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "HorasExtras.Wsl.Seguridad",
 		DefaultWebSiteLanguage = "Visual Basic"
 	EndProjectSection
 EndProject
-Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "HorasExtras.Sql.Seguridad", "..\HorasExtras.Sql.Seguridad\HorasExtras.Sql.Seguridad.sqlproj", "{5D79E3EF-2177-47CB-BAC3-D833CF50F657}"
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "HorasExtras.Sql.Seguridad", "HorasExtras.Sql.Seguridad\HorasExtras.Sql.Seguridad.sqlproj", "{5D79E3EF-2177-47CB-BAC3-D833CF50F657}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
