@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2005
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "HorasExtras.Wsl.Seguridad", "..\..\..\..\..\..\Lot2k63\Req1417\Fuentes\Wsl\HorasExtras.Wsl.Seguridad\", "{D71FDBD0-D272-4FCF-8DEF-7F40683B86F3}"
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "HorasExtras.Wsl.Seguridad", ".", "{D71FDBD0-D272-4FCF-8DEF-7F40683B86F3}"
 	ProjectSection(WebsiteProperties) = preProject
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv3.5"
 		Debug.AspNetCompiler.VirtualPath = "/localhost_55269"
@@ -25,13 +25,24 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "HorasExtras.Wsl.Seguridad",
 		DefaultWebSiteLanguage = "Visual Basic"
 	EndProjectSection
 EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "HorasExtras.Sql.Seguridad", "..\HorasExtras.Sql.Seguridad\HorasExtras.Sql.Seguridad.sqlproj", "{5D79E3EF-2177-47CB-BAC3-D833CF50F657}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{D71FDBD0-D272-4FCF-8DEF-7F40683B86F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D71FDBD0-D272-4FCF-8DEF-7F40683B86F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D71FDBD0-D272-4FCF-8DEF-7F40683B86F3}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{D71FDBD0-D272-4FCF-8DEF-7F40683B86F3}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{5D79E3EF-2177-47CB-BAC3-D833CF50F657}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D79E3EF-2177-47CB-BAC3-D833CF50F657}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D79E3EF-2177-47CB-BAC3-D833CF50F657}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{5D79E3EF-2177-47CB-BAC3-D833CF50F657}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D79E3EF-2177-47CB-BAC3-D833CF50F657}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D79E3EF-2177-47CB-BAC3-D833CF50F657}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
