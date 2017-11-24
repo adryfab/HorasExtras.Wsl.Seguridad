@@ -114,4 +114,10 @@ Public Class Seguridad
         Return resultado
     End Function
 
+    <WebMethod()> _
+    Public Function RecuperarAtrasos(ByVal user As String) As DataSet
+        Dim dts As DataSet = conn.RecuperarAtrasos(user)
+        Return dts
+    End Function
+
 End Class

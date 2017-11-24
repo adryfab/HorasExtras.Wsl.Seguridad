@@ -316,4 +316,18 @@ Public Class SQLConexionBD
         Return validado
     End Function
 
+    Public Function RecuperarAtrasos(ByVal user As String) As DataSet
+        Dim dtSet = New DataSet
+        Try
+            Dim SQLDataAdapter = New SqlDataAdapter("spAtrasosRecuperar", Conexion)
+            SQLDataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure
+            SQLDataAdapter.SelectCommand.Parameters.Add(New SqlParameter("@UsuarioId", SqlDbType.VarChar, 50))
+            SQLDataAdapter.SelectCommand.Parameters("@UsuarioId").Value = user
+            SQLDataAdapter.Fill(dtSet)
+        Catch ex As Exception
+            dtSet = Nothing
+        End Try
+        Return dtSet
+    End Function
+
 End Class
