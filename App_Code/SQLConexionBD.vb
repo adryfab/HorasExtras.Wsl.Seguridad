@@ -330,4 +330,30 @@ Public Class SQLConexionBD
         Return dtSet
     End Function
 
+    Public Function GrabarAtrasos(ByVal user As String, ByVal infoXml As String) As Integer
+        Dim AtrasosId As Integer
+        Try
+            Dim SQLDataAdapter = New SqlDataAdapter("spAtrasosAgregar", Conexion)
+            SQLDataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure
+            SQLDataAdapter.SelectCommand.Parameters.Add(New SqlParameter("@UsuarioId", SqlDbType.VarChar, 50))
+            SQLDataAdapter.SelectCommand.Parameters("@UsuarioId").Value = user
+            SQLDataAdapter.SelectCommand.Parameters.Add(New SqlParameter("@InfoXml", SqlDbType.Xml))
+            SQLDataAdapter.SelectCommand.Parameters("@InfoXml").Value = infoXml
+            SQLDataAdapter.SelectCommand.Parameters.Add(New SqlParameter("@AtrasosId", SqlDbType.BigInt))
+            SQLDataAdapter.SelectCommand.Parameters("@AtrasosId").Direction = ParameterDirection.Output
+            If Conexion.State = ConnectionState.Closed Then
+                Conexion.Open()
+            End If
+            SQLDataAdapter.SelectCommand.ExecuteNonQuery()
+            AtrasosId = SQLDataAdapter.SelectCommand.Parameters("@AtrasosId").Value
+        Catch ex As Exception
+            AtrasosId = 0
+        Finally
+            If Conexion.State = ConnectionState.Open Then
+                Conexion.Close()
+            End If
+        End Try
+        Return AtrasosId
+    End Function
+
 End Class

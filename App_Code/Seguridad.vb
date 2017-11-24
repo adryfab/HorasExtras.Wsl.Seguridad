@@ -120,4 +120,10 @@ Public Class Seguridad
         Return dts
     End Function
 
+    <WebMethod()> _
+    Public Function GrabarAtrasos(ByVal user As String, ByVal infoXml As String) As Integer
+        Dim retorno As Integer = conn.GrabarAtrasos(user, infoXml)
+        Return retorno
+    End Function
+
 End Class
