@@ -35,6 +35,7 @@ BEGIN TRY
 			,Descripcion
 			,Activo
 			,Biometrico
+			,Aprobado
 		)
 		SELECT 
 			 UsuarioId		= @UsuarioId
@@ -49,6 +50,7 @@ BEGIN TRY
 			,Descripcion	= M.X.value('@JUSTIF', 'varchar(MAX)')
 			,Activo			= M.X.value('@ACTIVO', 'bit')
 			,Biometrico		= M.X.value('@BIOMET', 'bit')
+			,Aprobado		= M.X.value('@APROBA', 'bit')
 		FROM @InfoXml.nodes('/ATRASO')	AS M(X) 	
 		
 		SELECT @AtrasosId = @@IDENTITY
@@ -68,11 +70,17 @@ BEGIN TRY
 			,Descripcion	= M.X.value('@JUSTIF', 'varchar(MAX)')
 			,Activo			= M.X.value('@ACTIVO', 'bit')
 			,Biometrico		= M.X.value('@BIOMET', 'bit')
+			,Aprobado		= M.X.value('@APROBA', 'bit')
 		FROM tbAtrasos ATR 
 		INNER JOIN @InfoXml.nodes('/ATRASO') AS M(X) 
 		ON ATR.AtrasosId = M.X.value('@ATRAID', 'bigint')
 	END
 
+	--Se procesa la transacción.		
+    IF @@TRANCOUNT > 0 
+	BEGIN
+		COMMIT  TRAN 
+	END
 END TRY
 BEGIN CATCH
 	--En caso de error se realiza un rollback de la transaccion

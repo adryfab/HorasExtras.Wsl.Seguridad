@@ -7,7 +7,7 @@ GO
 
 --DROP PROCEDURE spImprimirRecuperar
 
-CREATE PROCEDURE spImprimirRecuperar
+ALTER PROCEDURE spImprimirRecuperar
 	 @UsuarioId 	VARCHAR(50) 
 AS
 BEGIN
@@ -50,6 +50,7 @@ BEGIN
 				, ISNULL(HOR.Descripcion,'') AS 'Justificativo'
 				, TBL.Fecha_Ingreso +' '+ '00:00' AS 'HorasPermiso'
 				, TBL.Fecha_Ingreso +' '+ '00:00'  AS 'HorasRecuperar'
+				, 1 AS 'Biometrico'
 		FROM	BIOMETRICO.TCONTROL.dbo.TBL_ASISTENCIA TBL
 		INNER	JOIN #tbPeriodo	AS PER 
 		ON		TBL.Fecha_Ingreso between PER.FechaInicial and PER.FechaFinal
@@ -70,6 +71,7 @@ BEGIN
 				, HE.Descripcion AS 'Justificativo'
 				, CONVERT(VARCHAR,HE.Fecha) +' '+ CONVERT(VARCHAR(5),HE.HorasPermiso,114) AS 'HorasPermiso'
 				, CONVERT(VARCHAR,HE.Fecha) +' '+ CONVERT(VARCHAR(5),HE.HorasRecuperar,114) AS 'HorasRecuperar'
+				, HE.Biometrico AS 'Biometrico'
 		FROM	HorasExtSup.dbo.tbHorasExtras HE
 		INNER	JOIN #tbPeriodo	AS PER 
 		ON		PER.anio = HE.Anio
@@ -91,6 +93,7 @@ BEGIN
 				, ISNULL(HOR.Descripcion,'') AS 'Justificativo'
 				, TBL.Fecha_Ingreso +' '+ '00:00' AS 'HorasPermiso'
 				, TBL.Fecha_Ingreso +' '+ '00:00'  AS 'HorasRecuperar'
+				, 1 AS 'Biometrico'
 		FROM	BIOMETRICO.TCONTROL.dbo.TBL_ASISTENCIA TBL
 		INNER	JOIN #tbPeriodo	AS PER 
 		ON		TBL.Fecha_Ingreso between PER.FechaInicial and PER.FechaFinal
@@ -111,6 +114,7 @@ BEGIN
 				, HE.Descripcion AS 'Justificativo'
 				, CONVERT(VARCHAR,HE.Fecha) +' '+ CONVERT(VARCHAR(5),HE.HorasPermiso,114) AS 'HorasPermiso'
 				, CONVERT(VARCHAR,HE.Fecha) +' '+ CONVERT(VARCHAR(5),HE.HorasRecuperar,114) AS 'HorasRecuperar'
+				, HE.Biometrico AS 'Biometrico'
 		FROM	HorasExtSup.dbo.tbHorasExtras HE
 		INNER	JOIN #tbPeriodo	AS PER 
 		ON		PER.anio = HE.Anio

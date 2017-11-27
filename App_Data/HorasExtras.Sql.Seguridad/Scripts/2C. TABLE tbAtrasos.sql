@@ -18,5 +18,6 @@ CREATE TABLE tbAtrasos
 	,Descripcion varchar(MAX) NULL
 	,Activo bit DEFAULT(1) NOT NULL
 	,Biometrico bit DEFAULT(1) NOT NULL
+	,Aprobado bit DEFAULT(0) NOT NULL
 )
 GO

@@ -40,6 +40,7 @@ BEGIN
 			, PER.periodo AS 'Periodo'
 			, ISNULL(ATR.Activo,1) AS 'Activo'
 			, 1 AS 'Biometrico'
+			, 0 AS 'Aprobado'
 	FROM	BIOMETRICO.TCONTROL.dbo.TBL_ASISTENCIA TBL
 	INNER	JOIN #tbPeriodo PER
 	ON		TBL.Fecha_Ingreso >= PER.FechaInicial
@@ -48,17 +49,20 @@ BEGIN
 	LEFT	JOIN tbAtrasos AS ATR
 	ON		ATR.CodigoEmp = TBL.EMP_ID
 	AND		ATR.Fecha = TBL.Fecha_Ingreso
-	WHERE	TBL.Novedad_Entrada NOT IN ('OK', 'EG', 'PE')
+	AND		CONVERT(VARCHAR(5),ISNULL(TBL.Hora_Ingreso,0), 114) = CONVERT(VARCHAR(5),ISNULL(ATR.Ingreso,0), 114)
+	WHERE	TBL.Novedad_Entrada NOT IN ('OK', 'EG', 'PE') --'FI', 
 	AND		TBL.EMP_ID = @CodEmp
+	--AND		TBL.min_AT > 0
+	AND NOT EXISTS (SELECT 1 FROM tbAtrasos EX WHERE EX.CodigoEmp = TBL.EMP_ID AND EX.Fecha = TBL.Fecha_Ingreso)
 
-	UNION ALL
+	UNION 
 
 	--Obtiene la información ingresada por el usuario
 	SELECT
 			  ATR.CodigoEmp AS 'CodigoEmp'
 			, SUBSTRING(dbo.fnObtenerNombreDia(ATR.Fecha), 1, 3) AS 'Dia'
 			, ATR.Fecha AS 'Fecha'
-			, ATR.Ingreso AS 'Ingreso'
+			, CASE WHEN CONVERT(VARCHAR(5),ISNULL(ATR.Ingreso,0), 114) = '00:00' THEN NULL ELSE ATR.Ingreso END AS 'Ingreso'
 			, ATR.Tiempo AS 'Tiempo'
 			, ATR.CodNovedad COLLATE DATABASE_DEFAULT AS 'CodNov'
 			, ATR.DetNovedad COLLATE DATABASE_DEFAULT AS 'Tipo'
@@ -68,6 +72,7 @@ BEGIN
 			, ATR.PeriodoId AS 'Periodo'
 			, ISNULL(ATR.Activo,1) AS 'Activo'
 			, ATR.Biometrico AS 'Biometrico'
+			, ATR.Aprobado AS 'Aprobado'
 	FROM	HorasExtSup.dbo.tbAtrasos ATR
 	INNER	JOIN #tbPeriodo	AS PER 
 	ON		PER.anio = ATR.Anio
