@@ -74,6 +74,8 @@ BEGIN TRY
 		FROM tbAtrasos ATR 
 		INNER JOIN @InfoXml.nodes('/ATRASO') AS M(X) 
 		ON ATR.AtrasosId = M.X.value('@ATRAID', 'bigint')
+
+		SELECT @AtrasosId = 1
 	END
 
 	--Se procesa la transacción.		
