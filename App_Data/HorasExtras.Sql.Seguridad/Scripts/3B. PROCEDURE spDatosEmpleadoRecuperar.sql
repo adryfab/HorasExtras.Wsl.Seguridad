@@ -4,10 +4,10 @@ GO
 -- ##SUMMARY Consulta información basica del empleado
 -- ##AUTHOR  14/Sep/2017 Adriana Martinez
 -- ##REMARKS 
+-- ##HISTORY 29/Nov/2017 Adriana Martinez
+-- ##HISTORY Añadida columna Atrasos
 
---DROP PROCEDURE spDatosEmpleadoRecuperar
-
-CREATE PROCEDURE spDatosEmpleadoRecuperar
+ALTER PROCEDURE spDatosEmpleadoRecuperar
 	@UsuarioId VARCHAR(50)
 AS
 BEGIN
@@ -38,6 +38,7 @@ BEGIN
 			, NOM.NOMINA_DEP AS 'DepartamentoId'
 			, NOM.NOMINA_CAL1 AS 'Cargo'
 			, NOM.NOMINA_CAL AS 'CargoId'
+			, RIGHT('00' + Ltrim(Rtrim(APR.HorasAtraso )),2) + ':' + RIGHT('00' + Ltrim(Rtrim(APR.MinutosAtraso )),2) AS 'Atrasos'
 	FROM	#tbPeriodo	AS PER 
 	LEFT	JOIN HorasExtSup.dbo.tbAprobaciones APR
 	ON		APR.CodigoEmp = @CodEmp 
