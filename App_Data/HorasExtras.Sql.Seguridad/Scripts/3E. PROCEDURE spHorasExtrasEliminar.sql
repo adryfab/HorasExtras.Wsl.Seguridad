@@ -4,10 +4,10 @@ GO
 -- ##SUMMARY Elimina la información registrada por el usuario en la tabla de HorasExtras
 -- ##AUTHOR  12/Sep/2017 Adriana Martinez
 -- ##REMARKS 
+-- ##HISTORY 29/Nov/2017 Adriana Martinez
+-- ##HISTORY Añadido SP Aprobaciones
 
---DROP PROCEDURE spHorasExtrasEliminar
-
-CREATE PROCEDURE spHorasExtrasEliminar
+ALTER PROCEDURE spHorasExtrasEliminar
 	 @UsuarioId		varchar(50) 
 	,@InfoXml		xml
 AS
@@ -18,7 +18,11 @@ BEGIN TRY
 	FROM	tbHorasExtras AS HE
 	INNER	JOIN @InfoXml.nodes('/HOREXT')	AS M(X)
 	ON		HE.HorasExtrasId	= M.X.value('@HOREXT', 'bigint')
-	AND		HE.UsuarioId		= @UsuarioId
+	--AND		HE.UsuarioId		= @UsuarioId
+	AND		HE.CodigoEmp		= @UsuarioId
+
+	--Se actualizan las Aprobaciones
+	EXEC spAprobacionesAgregar @UsuarioId = @UsuarioId, @InfoXml = @InfoXml
 
 	--Se procesa la transacción.
     IF @@TRANCOUNT > 0 

@@ -4,6 +4,8 @@ GO
 -- ##SUMMARY Recupera informacion para imprimir
 -- ##AUTHOR  20/Sep/2017 Adriana Martinez
 -- ##REMARKS 
+-- ##HISTORY 24/Nov/2017 Adriana Martinez
+-- ##HISTORY Añadida columna Biometrico
 
 --DROP PROCEDURE spImprimirRecuperar
 
