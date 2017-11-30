@@ -149,7 +149,7 @@ BEGIN
 	WHERE NOM.NOMINA_ID = @CodEmp
 
 	--Informacion de la cabecera de aprobaciones
-	SELECT	RIGHT('0' + Ltrim(Rtrim(APR.HorasAtraso )),2) + ':' + RIGHT('00' + Ltrim(Rtrim(APR.MinutosAtraso )),2) AS 'Atrasos'
+	SELECT	CONVERT(VARCHAR,APR.HorasAtraso) + ':' + RIGHT('00' + Ltrim(Rtrim(APR.MinutosAtraso )),2) AS 'Atrasos'
 	FROM	tbAprobaciones APR
 	INNER	JOIN #tbPeriodo PER
 	ON		PER.anio = APR.Anio
