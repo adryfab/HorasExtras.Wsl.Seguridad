@@ -97,7 +97,9 @@ BEGIN TRY
 	END
 
 	--Se actualizan las Aprobaciones
-	EXEC spAprobacionesAgregar @UsuarioId = @UsuarioId, @InfoXml = @InfoXml
+	Declare @CodigoEmp int
+	SELECT @CodigoEmp = ISNULL(M.X.value('@CODEMP', 'int'),0) FROM @InfoXml.nodes('/HOREXT') AS M(X)
+	EXEC spAprobacionesAgregar @UsuarioId = @CodigoEmp, @InfoXml = @InfoXml
 	
 	--Se procesa la transacción.		
     IF @@TRANCOUNT > 0 

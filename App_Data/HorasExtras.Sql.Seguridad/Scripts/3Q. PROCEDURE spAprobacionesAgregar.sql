@@ -143,8 +143,6 @@ BEGIN TRY
 			,FechaSuper
 			,UsuarioJefe
 			,Fechajefe
-			,HorasAtraso
-			,MinutosAtraso
 		)
 		SELECT	 M.X.value('@CODEMP', 'int') AS 'CodigoEmp'
 				,M.X.value('@ANIOPE', 'int') AS 'Anio'
@@ -160,11 +158,14 @@ BEGIN TRY
 				,NULL			AS 'FechaSuper'
 				,NULL			AS 'UsuarioJefe'
 				,NULL			AS 'Fechajefe'
-				,NULL			AS 'HorasAtraso'
-				,NULL			AS 'MinutosAtraso'
 		FROM @InfoXml.nodes('/HOREXT') AS M(X) 
 	END
-		
+	
+	--Se actualizan los Atrasos
+	Declare @CodigoEmp int
+	SELECT @CodigoEmp = ISNULL(M.X.value('@CODEMP', 'int'),0) FROM @InfoXml.nodes('/HOREXT') AS M(X)
+	EXEC spAprobacionesAtrasosActualizar @UsuarioId = @CodigoEmp
+
 	--Se procesa la transacción.
     IF @@TRANCOUNT > 0 
 	BEGIN
