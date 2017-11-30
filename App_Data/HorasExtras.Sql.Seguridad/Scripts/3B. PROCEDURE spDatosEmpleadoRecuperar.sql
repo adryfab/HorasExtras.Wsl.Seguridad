@@ -38,7 +38,7 @@ BEGIN
 			, NOM.NOMINA_DEP AS 'DepartamentoId'
 			, NOM.NOMINA_CAL1 AS 'Cargo'
 			, NOM.NOMINA_CAL AS 'CargoId'
-			, RIGHT('00' + Ltrim(Rtrim(APR.HorasAtraso )),2) + ':' + RIGHT('00' + Ltrim(Rtrim(APR.MinutosAtraso )),2) AS 'Atrasos'
+			, RIGHT('0' + Ltrim(Rtrim(APR.HorasAtraso )),2) + ':' + RIGHT('00' + Ltrim(Rtrim(APR.MinutosAtraso )),2) AS 'Atrasos'
 	FROM	#tbPeriodo	AS PER 
 	LEFT	JOIN HorasExtSup.dbo.tbAprobaciones APR
 	ON		APR.CodigoEmp = @CodEmp 

@@ -5,9 +5,7 @@ GO
 -- ##AUTHOR  20/Sep/2017 Adriana Martinez
 -- ##REMARKS 
 -- ##HISTORY 24/Nov/2017 Adriana Martinez
--- ##HISTORY Añadida columna Biometrico
-
---DROP PROCEDURE spImprimirRecuperar
+-- ##HISTORY Añadida columna Biometrico y Aprobado
 
 ALTER PROCEDURE spImprimirRecuperar
 	 @UsuarioId 	VARCHAR(50) 
@@ -53,6 +51,7 @@ BEGIN
 				, TBL.Fecha_Ingreso +' '+ '00:00' AS 'HorasPermiso'
 				, TBL.Fecha_Ingreso +' '+ '00:00'  AS 'HorasRecuperar'
 				, 1 AS 'Biometrico'
+				, ISNULL(HOR.Aprobado,0) AS 'Aprobado'
 		FROM	BIOMETRICO.TCONTROL.dbo.TBL_ASISTENCIA TBL
 		INNER	JOIN #tbPeriodo	AS PER 
 		ON		TBL.Fecha_Ingreso between PER.FechaInicial and PER.FechaFinal
@@ -74,6 +73,7 @@ BEGIN
 				, CONVERT(VARCHAR,HE.Fecha) +' '+ CONVERT(VARCHAR(5),HE.HorasPermiso,114) AS 'HorasPermiso'
 				, CONVERT(VARCHAR,HE.Fecha) +' '+ CONVERT(VARCHAR(5),HE.HorasRecuperar,114) AS 'HorasRecuperar'
 				, HE.Biometrico AS 'Biometrico'
+				, HE.Aprobado AS 'Aprobado'
 		FROM	HorasExtSup.dbo.tbHorasExtras HE
 		INNER	JOIN #tbPeriodo	AS PER 
 		ON		PER.anio = HE.Anio
@@ -96,6 +96,7 @@ BEGIN
 				, TBL.Fecha_Ingreso +' '+ '00:00' AS 'HorasPermiso'
 				, TBL.Fecha_Ingreso +' '+ '00:00'  AS 'HorasRecuperar'
 				, 1 AS 'Biometrico'
+				, ISNULL(HOR.Aprobado,0) AS 'Aprobado'
 		FROM	BIOMETRICO.TCONTROL.dbo.TBL_ASISTENCIA TBL
 		INNER	JOIN #tbPeriodo	AS PER 
 		ON		TBL.Fecha_Ingreso between PER.FechaInicial and PER.FechaFinal
@@ -117,6 +118,7 @@ BEGIN
 				, CONVERT(VARCHAR,HE.Fecha) +' '+ CONVERT(VARCHAR(5),HE.HorasPermiso,114) AS 'HorasPermiso'
 				, CONVERT(VARCHAR,HE.Fecha) +' '+ CONVERT(VARCHAR(5),HE.HorasRecuperar,114) AS 'HorasRecuperar'
 				, HE.Biometrico AS 'Biometrico'
+				, HE.Aprobado AS 'Aprobado'
 		FROM	HorasExtSup.dbo.tbHorasExtras HE
 		INNER	JOIN #tbPeriodo	AS PER 
 		ON		PER.anio = HE.Anio
@@ -145,6 +147,14 @@ BEGIN
 	LEFT JOIN BIOMETRICO.ONLYCONTROL.dbo.NOMINA ANOM
 	ON ANOM.NOMINA_ID = ARE.AREA_EM
 	WHERE NOM.NOMINA_ID = @CodEmp
+
+	--Informacion de la cabecera de aprobaciones
+	SELECT	RIGHT('0' + Ltrim(Rtrim(APR.HorasAtraso )),2) + ':' + RIGHT('00' + Ltrim(Rtrim(APR.MinutosAtraso )),2) AS 'Atrasos'
+	FROM	tbAprobaciones APR
+	INNER	JOIN #tbPeriodo PER
+	ON		PER.anio = APR.Anio
+	AND		PER.periodo = APR.PeriodoId
+	WHERE	CodigoEmp = @CodEmp
 
 	DROP TABLE #tbPeriodo
 END
