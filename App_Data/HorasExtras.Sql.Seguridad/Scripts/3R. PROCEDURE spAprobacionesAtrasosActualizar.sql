@@ -103,6 +103,11 @@ BEGIN TRY
 	END
 	ELSE
 	BEGIN --Atraso descontado y faltan
+		SELECT @Total50 = CONVERT(varchar(8), DATEADD(SECOND, 0, 0),  108)
+		--Se divide en horas y minutos
+		SELECT	 @TotalHoras50 = DATEPART(HOUR,@Total50) 
+				,@TotalMinutos50 = DATEPART(MINUTE,@Total50)
+
 		SELECT @Dif50 = @Dif50 * (-1)
 		SELECT @TotalAtraso = CONVERT(varchar(8), DATEADD(SECOND, @Dif50, 0),  108)
 		--Resta con el 100%
