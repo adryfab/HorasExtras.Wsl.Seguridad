@@ -4,10 +4,10 @@ GO
 -- ##SUMMARY Consulta la informacion de todas las aprobaciones con horas para extracion
 -- ##AUTHOR  03/Oct/2017 Adriana Martinez
 -- ##REMARKS 
+-- ##HISTORY 01/Dic/2017 Adriana Martinez
+-- ##HISTORY Calculo de atrasos
 
---DROP PROCEDURE spProcesarTotales
-
-CREATE PROCEDURE spProcesarTotales
+ALTER PROCEDURE spProcesarTotales
 AS
 BEGIN
 	--Obtiene el ultimo periodo 

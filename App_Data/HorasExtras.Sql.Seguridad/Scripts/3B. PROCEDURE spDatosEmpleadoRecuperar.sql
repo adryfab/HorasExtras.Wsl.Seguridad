@@ -25,6 +25,9 @@ BEGIN
 	FROM BIOMETRICO.TCONTROL.dbo.TBL_PERIODO 
 	ORDER BY anio DESC, periodo DESC
 
+	--Se actualizan las aprobaciones por los totales de atrasos
+	EXEC spAprobacionesAtrasosActualizar @UsuarioId = @CodEmp
+
 	--DATOS DEL EMPLEADO
 	SELECT	  @CodEmp AS 'CodigoEmp'
 			, PER.anio AS 'Anio'
