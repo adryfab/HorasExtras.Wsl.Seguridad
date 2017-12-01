@@ -78,6 +78,9 @@ BEGIN TRY
 		SELECT @AtrasosId = 1
 	END
 
+	--Se actualizan las aprobaciones
+	EXEC spAprobacionesAtrasosActualizar @UsuarioId = @UsuarioId
+
 	--Se procesa la transacción.		
     IF @@TRANCOUNT > 0 
 	BEGIN

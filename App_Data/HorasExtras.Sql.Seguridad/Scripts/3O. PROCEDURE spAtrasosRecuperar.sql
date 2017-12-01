@@ -52,8 +52,8 @@ BEGIN
 	AND		CONVERT(VARCHAR(5),ISNULL(TBL.Hora_Ingreso,0), 114) = CONVERT(VARCHAR(5),ISNULL(ATR.Ingreso,0), 114)
 	WHERE	TBL.Novedad_Entrada NOT IN ('OK', 'EG', 'PE') --'FI', 
 	AND		TBL.EMP_ID = @CodEmp
-	--AND		TBL.min_AT > 0
 	AND NOT EXISTS (SELECT 1 FROM tbAtrasos EX WHERE EX.CodigoEmp = TBL.EMP_ID AND EX.Fecha = TBL.Fecha_Ingreso)
+	AND		(TBL.min_AT > 0 OR TBL.Hora_Ingreso IS NULL)
 
 	UNION 
 
