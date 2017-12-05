@@ -27,8 +27,8 @@ BEGIN TRY
 			,@TotalMinutos100 smallint
 			,@Total50 time(0)
 			,@Total100 time(0)
-			,@Dif50 smallint
-			,@Dif100 smallint
+			,@Dif50 int
+			,@Dif100 int
 
 	--Obtiene el ultimo periodo 
 	SELECT	 TOP 1 
