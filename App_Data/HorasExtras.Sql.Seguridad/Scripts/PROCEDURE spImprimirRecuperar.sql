@@ -80,7 +80,7 @@ BEGIN
 		AND		PER.periodo = HE.PeriodoId
 		WHERE	HE.Activo = 1
 		AND		HE.CodigoEmp = @CodEmp 
-		AND		DATEDIFF(SECOND, '00:00', HE.Horas50) > 0 OR DATEDIFF(SECOND, '00:00', HE.HorasPermiso) > 0
+		AND		(DATEDIFF(SECOND, '00:00', HE.Horas50) > 0 OR DATEDIFF(SECOND, '00:00', HE.HorasPermiso) > 0)
 	) AS X
 
 	--Informacion del biometrico y registrado al 100% EXTRAORDINARIAS
@@ -125,7 +125,7 @@ BEGIN
 		AND		PER.periodo = HE.PeriodoId
 		WHERE	HE.Activo = 1
 		AND		HE.CodigoEmp = @CodEmp 
-		AND		DATEDIFF(SECOND, '00:00', HE.Horas100) > 0 OR DATEDIFF(SECOND, '00:00', HE.HorasRecuperar) > 0
+		AND		(DATEDIFF(SECOND, '00:00', HE.Horas100) > 0 OR DATEDIFF(SECOND, '00:00', HE.HorasRecuperar) > 0)
 	) AS X
 
 	--Informacion de los superiores
