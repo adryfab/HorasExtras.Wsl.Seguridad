@@ -146,8 +146,14 @@ Public Class LdapAuthentication
         Return Nothing
     End Function
 
-    Public Function ValidarCredenciales(ByVal usuario As String, ByVal clave As String, ByVal dominio As String) As Boolean
+    Public Function ValidarCredenciales(ByVal usuario As String, ByVal clave As String, ByVal dominio As String, ByVal crypto As String) As Boolean
+        Dim flag1 As Boolean = False
         Dim flag2 As Boolean = False
+        'Se agrega la opción de encriptacion antes de validar el usuario
+        flag1 = ValPass(crypto)
+        If flag1 = False Then
+            Return False
+        End If
         flag2 = (Not ValidarLogin(usuario, clave, (dominio)).GetDirectoryEntry Is Nothing)
         If Not flag2 Then
             Return False
@@ -170,6 +176,39 @@ Public Class LdapAuthentication
                 retorno = False
             End If
         End If
+        Return retorno
+    End Function
+
+    Public Function ValPass(ByVal crypto As String) As Boolean
+        Dim retorno As Boolean = False
+        Try
+            Dim rootWebConfig1 As System.Configuration.Configuration
+            rootWebConfig1 = System.Web.Configuration.WebConfigurationManager.OpenWebConfiguration("~/")
+            If (0 < rootWebConfig1.AppSettings.Settings.Count) Then
+                Dim user, password As System.Configuration.KeyValueConfigurationElement
+                'El usuario en el web.config esta sin encriptar
+                user = rootWebConfig1.AppSettings.Settings("user")
+                'El password es una palabra aleatoria sin significado
+                password = rootWebConfig1.AppSettings.Settings("password")
+                'Se crea la nueva clase usando el password
+                Dim wrapper As New Simple3Des(password.Value)
+                ''Se encripta el nombre del usuario
+                'Dim newUser As String = wrapper.EncryptData(user.Value)
+                Dim newUser As String = user.Value
+                'La variable crypto enviada por parametro desde el front-end es el mismo usuario que el del web.config,
+                'pero se envia encriptado
+                'Se desencripta la variable crypto
+                Dim newCrypto As String = wrapper.DecryptData(crypto)
+                'Se verifica que ambos usuarios sean iguales (desencriptados)
+                If newCrypto = newUser Then
+                    retorno = True
+                Else
+                    retorno = False
+                End If
+            End If
+        Catch ex As Exception
+            retorno = False
+        End Try
         Return retorno
     End Function
 

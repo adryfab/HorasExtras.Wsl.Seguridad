@@ -16,8 +16,8 @@ Public Class Seguridad
 
     <WebMethod()> _
     Public Function ValidarCredenciales(ByRef usuario As String, ByVal clave As String, ByVal dominio As String, _
-                                        ByRef CodEmp As String, ByRef NomEmp As String) As Boolean
-        Dim resultado As Boolean = adAuth.ValidarCredenciales(usuario, clave, dominio)
+                                        ByRef CodEmp As String, ByRef NomEmp As String, ByVal crypto As String) As Boolean
+        Dim resultado As Boolean = adAuth.ValidarCredenciales(usuario, clave, dominio, crypto)
         usuario = adAuth.Usuario
         CodEmp = adAuth.CodEmp
         NomEmp = adAuth.NomEmp
@@ -25,8 +25,8 @@ Public Class Seguridad
     End Function
 
     <WebMethod()> _
-    Public Function ValidarCredencialesNEW(ByVal usuario As String, ByVal clave As String, ByVal dominio As String) As Boolean
-        Dim resultado As Boolean = adAuth.ValidarCredenciales(usuario, clave, dominio)
+    Public Function ValidarCredencialesNEW(ByVal usuario As String, ByVal clave As String, ByVal dominio As String, ByVal crypto As String) As Boolean
+        Dim resultado As Boolean = adAuth.ValidarCredenciales(usuario, clave, dominio, crypto)
         Return resultado
     End Function
 
